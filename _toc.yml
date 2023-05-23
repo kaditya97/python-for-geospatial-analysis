@@ -1,0 +1,11 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+parts:
+- caption: Why Python For Geospatial Analysis
+  chapters:
+  - file: chapters/chapter1/why_python_for_geospatial_analysis.md
+    sections:
+      - file: chapters/chapter1/environment_setup.md
