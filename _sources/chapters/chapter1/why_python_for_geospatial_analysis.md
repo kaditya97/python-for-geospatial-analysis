@@ -1,5 +1,9 @@
 # Why Python For Geospatial Analysis
 
+Programming facilitates automation and reproducibility of our workflows. When programming, we interact with the computer through scripts. Therefore, the workflows we create can be repeated, adapted for other use cases in the future, and shared with other people who would like to accurately reproduce your workflow.
+
+Through programming, the user is “forced” to have a deeper understanding of the underlying data and the computational algorithms behind GIS workflows. Working through a CLI usually involves knowledge of lower-level details and “forces” us to be specific about what we want to do.
+
 Python is a popular programming language for geospatial analysis due to several key reasons:
 
 1. Rich Ecosystem: Python has a vast and active ecosystem of libraries and tools specifically designed for geospatial analysis. Some of the most widely used libraries include GDAL (Geospatial Data Abstraction Library), Fiona, Shapely, GeoPandas, and PyProj. These libraries provide a wide range of functionalities for reading, writing, manipulating, and visualizing geospatial data.

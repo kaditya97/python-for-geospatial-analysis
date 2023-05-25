@@ -154,12 +154,32 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Why Python For Geospatial Analysis</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview and Setup</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="chapters/chapter1/why_python_for_geospatial_analysis.html">Why Python For Geospatial Analysis</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="chapters/chapter1/environment_setup.html">Environmet Setup</a></li>
 </ul>
 </li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Basic Elements of Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapters/chapter2/data_types_and_variables.html">Data Types and Variables</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploring Data Using Pandas</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapters/chapter3/what_is_pandas.html">What is Pandas</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploring Geospatial Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapters/chapter4/gdal_and_ogr.html">GDAL and OGR</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Geospatial Data Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapters/chapter5/analysis_using_geopandas.html">Analysis Using Geopandas</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DEM Analysis</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapters/chapter6/introduction_to_dem_analysis.html">Introduction to DEM Analysis</a></li>
 </ul>
 
     </div>
@@ -330,7 +350,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -346,6 +368,18 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Course Information</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#more-to-know">More to Know</a><ul class="visible nav section-nav flex-column">
+</ul>
+</li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -357,15 +391,48 @@ document.write(`
                   
   <div class="tex2jax_ignore mathjax_ignore section" id="course-information">
 <h1>Course Information<a class="headerlink" href="#course-information" title="Permalink to this headline">#</a></h1>
-<p>This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out <a class="reference external" href="https://jupyterbook.org">the Jupyter Book documentation</a> for more information.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Let’s take it easy</p>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="more-to-know">
+<h1>More to Know<a class="headerlink" href="#more-to-know" title="Permalink to this headline">#</a></h1>
 <p>Check out the content pages bundled with this sample book to see more.</p>
 <div class="toctree-wrapper compound">
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Why Python For Geospatial Analysis</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview and Setup</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="chapters/chapter1/why_python_for_geospatial_analysis.html">Why Python For Geospatial Analysis</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Basic Elements of Python</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/chapter2/data_types_and_variables.html">Data Types and Variables</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploring Data Using Pandas</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/chapter3/what_is_pandas.html">What is Pandas</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploring Geospatial Data</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/chapter4/gdal_and_ogr.html">GDAL and OGR</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Geospatial Data Analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/chapter5/analysis_using_geopandas.html">Analysis Using Geopandas</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">DEM Analysis</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/chapter6/introduction_to_dem_analysis.html">Introduction to DEM Analysis</a></li>
 </ul>
 </div>
 </div>
@@ -419,6 +486,24 @@ It does not go in-depth into any particular topic - check out <a class="referenc
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Course Information</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#more-to-know">More to Know</a><ul class="visible nav section-nav flex-column">
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>

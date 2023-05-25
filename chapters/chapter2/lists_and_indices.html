@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Why Python For Geospatial Analysis &#8212; Python For Geospatial Analysis</title>
+    <title>Lists and Indices &#8212; Python For Geospatial Analysis</title>
   
   
   
@@ -59,12 +59,10 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/chapter1/why_python_for_geospatial_analysis';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/chapter2/lists_and_indices';</script>
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Environmet Setup" href="environment_setup.html" />
-    <link rel="prev" title="Course Information" href="../../intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -156,15 +154,15 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview and Setup</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Why Python For Geospatial Analysis</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="environment_setup.html">Environmet Setup</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter1/why_python_for_geospatial_analysis.html">Why Python For Geospatial Analysis</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../chapter1/environment_setup.html">Environmet Setup</a></li>
 </ul>
 </li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Basic Elements of Python</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../chapter2/data_types_and_variables.html">Data Types and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_types_and_variables.html">Data Types and Variables</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploring Data Using Pandas</span></p>
 <ul class="nav bd-sidenav">
@@ -252,7 +250,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/chapter1/why_python_for_geospatial_analysis.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/chapter2/lists_and_indices.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -282,7 +280,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../../_sources/chapters/chapter1/why_python_for_geospatial_analysis.md" target="_blank"
+      <li><a href="../../_sources/chapters/chapter2/lists_and_indices.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -362,7 +360,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Why Python For Geospatial Analysis</h1>
+    <h1>Lists and Indices</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -376,22 +374,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <div class="tex2jax_ignore mathjax_ignore section" id="why-python-for-geospatial-analysis">
-<h1>Why Python For Geospatial Analysis<a class="headerlink" href="#why-python-for-geospatial-analysis" title="Permalink to this headline">#</a></h1>
-<p>Programming facilitates automation and reproducibility of our workflows. When programming, we interact with the computer through scripts. Therefore, the workflows we create can be repeated, adapted for other use cases in the future, and shared with other people who would like to accurately reproduce your workflow.</p>
-<p>Through programming, the user is “forced” to have a deeper understanding of the underlying data and the computational algorithms behind GIS workflows. Working through a CLI usually involves knowledge of lower-level details and “forces” us to be specific about what we want to do.</p>
-<p>Python is a popular programming language for geospatial analysis due to several key reasons:</p>
-<ol class="arabic simple">
-<li><p>Rich Ecosystem: Python has a vast and active ecosystem of libraries and tools specifically designed for geospatial analysis. Some of the most widely used libraries include GDAL (Geospatial Data Abstraction Library), Fiona, Shapely, GeoPandas, and PyProj. These libraries provide a wide range of functionalities for reading, writing, manipulating, and visualizing geospatial data.</p></li>
-<li><p>Accessibility and Simplicity: Python is known for its readability and ease of use, making it an accessible language for beginners and experienced programmers alike. Its syntax is concise and expressive, allowing geospatial analysts to write efficient and understandable code. Additionally, Python’s extensive documentation and active community make it easier to find resources and support when working on geospatial projects.</p></li>
-<li><p>Integration with Other Tools: Python seamlessly integrates with other popular tools used in geospatial analysis, such as GIS (Geographic Information System) software, remote sensing packages, and statistical analysis libraries. It can act as a glue language to connect different tools and workflows, enabling data exchange and interoperability.</p></li>
-<li><p>Data Processing and Analysis: Python’s extensive scientific computing libraries, such as NumPy, SciPy, and Pandas, provide powerful data processing and analysis capabilities. These libraries allow geospatial analysts to perform complex mathematical and statistical operations on geospatial datasets, enabling tasks like spatial interpolation, clustering, regression analysis, and more.</p></li>
-<li><p>Visualization: Python offers numerous visualization libraries, including Matplotlib, Plotly, and Seaborn, which enable the creation of high-quality plots, maps, and interactive visualizations. These tools allow geospatial analysts to present their findings in a visually appealing and informative manner, aiding in the communication of complex spatial patterns and relationships.</p></li>
-<li><p>Machine Learning and AI: Python’s popularity in the field of data science and machine learning translates well to geospatial analysis. Libraries such as scikit-learn and TensorFlow provide robust machine learning and deep learning capabilities, which can be leveraged for tasks like image classification, object detection, spatial clustering, and predictive modeling based on geospatial data.</p></li>
-</ol>
-<p>Overall, Python’s extensive geospatial libraries, ease of use, integration capabilities, and powerful data analysis and visualization tools make it a preferred choice for geospatial analysis tasks, ranging from simple data manipulation to advanced spatial modeling and machine learning applications.</p>
-<div class="toctree-wrapper compound">
-</div>
+  <div class="tex2jax_ignore mathjax_ignore section" id="lists-and-indices">
+<h1>Lists and Indices<a class="headerlink" href="#lists-and-indices" title="Permalink to this headline">#</a></h1>
 </div>
 
     <script type="text/x-thebe-config">
@@ -407,7 +391,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./chapters\chapter1"
+            path: "./chapters\chapter2"
         },
         predefinedOutput: true
     }
@@ -425,24 +409,6 @@ document.write(`
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../../intro.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Course Information</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="environment_setup.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Environmet Setup</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div></div>
   
 </div>
