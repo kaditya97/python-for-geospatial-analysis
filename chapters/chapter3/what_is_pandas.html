@@ -63,8 +63,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="GDAL and OGR" href="../chapter4/gdal_and_ogr.html" />
-    <link rel="prev" title="Data Types and Variables" href="../chapter2/data_types_and_variables.html" />
+    <link rel="next" title="Exploring Data Using Pandas" href="exploring_data_using_pandas.html" />
+    <link rel="prev" title="Exceptions and Error Handling" href="../chapter2/exceptions_and_error_handling.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -157,22 +157,35 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview and Setup</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter1/why_python_for_geospatial_analysis.html">Why Python For Geospatial Analysis</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../chapter1/environment_setup.html">Environmet Setup</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter1/why_python_for_geospatial_analysis.html">Why Python For Geospatial Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter1/environment_setup.html">Environment Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter1/datasets.html">Datasets</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Basic Elements of Python</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../chapter2/data_types_and_variables.html">Data Types and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter2/operators_math_functions_and_comments.html">Operators, Math Functions and Comments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter2/list_and_indices.html">List and Indices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter2/dictionary.html">Dictionary in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter2/conditional_statements_and_for_loops.html">Conditional Statements and For Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter2/functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter2/reading_and_writing_files.html">Reading and Writing Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter2/classes_and_objects.html">Classes and Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter2/exceptions_and_error_handling.html">Exceptions and Error Handling</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploring Data Using Pandas</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">What is Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exploring_data_using_pandas.html">Exploring Data Using Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processing_data_using_pandas.html">Processing Data Using Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_datas.html">Ploting Data Using Matplotlib</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploring Geospatial Data</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../chapter4/gdal_and_ogr.html">GDAL and OGR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/shapely.html">Shapely</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/geopandas.html">Geopandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/rasterio.html">Rasterio</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Geospatial Data Analysis</span></p>
 <ul class="nav bd-sidenav">
@@ -235,7 +248,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+      <li><a href="https://github.com/kaditya97/python-for-geospatial-analysis" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -252,7 +265,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/chapter3/what_is_pandas.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/kaditya97/python-for-geospatial-analysis/issues/new?title=Issue%20on%20page%20%2Fchapters/chapter3/what_is_pandas.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -378,6 +391,18 @@ document.write(`
                   
   <div class="tex2jax_ignore mathjax_ignore section" id="what-is-pandas">
 <h1>What is Pandas<a class="headerlink" href="#what-is-pandas" title="Permalink to this headline">#</a></h1>
+<p>Pandas is a powerful open-source data manipulation and analysis library for Python. It provides data structures and functions that make it easy to work with structured data, such as tabular data, time series, and more. Pandas is built on top of the NumPy library and is widely used in data science, machine learning, and data analysis.</p>
+<p><strong>Key features of Pandas include:</strong></p>
+<p><strong>DataFrame:</strong> The core data structure in Pandas is the DataFrame, which is a two-dimensional table of data with labeled rows and columns. It allows you to store and manipulate heterogeneous data efficiently.</p>
+<p><strong>Data manipulation:</strong> Pandas provides a wide range of functions and methods for data manipulation tasks, such as filtering, sorting, grouping, joining, and reshaping data. You can perform various data transformations and operations with ease.</p>
+<p><strong>Missing data handling:</strong> Pandas has built-in support for handling missing or null values in datasets. It provides methods for detecting missing data, filling missing values, or dropping rows/columns with missing data.</p>
+<p><strong>Data I/O:</strong> Pandas allows you to read data from various file formats, such as CSV, Excel, SQL databases, and more. It also provides functions to write data back to these formats.</p>
+<p><strong>Time series analysis:</strong> Pandas has extensive capabilities for working with time series data. It provides tools for handling time stamps, resampling, time zone handling, and time-based operations.</p>
+<p><strong>Integration with other libraries:</strong> Pandas seamlessly integrates with other Python libraries, such as NumPy, Matplotlib, and scikit-learn, enabling you to combine the power of these libraries for data analysis, visualization, and machine learning tasks.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Pandas provides a comprehensive set of functionalities for data analysis, making it a popular choice among data scientists and analysts working with structured data in Python.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -412,20 +437,20 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../chapter2/data_types_and_variables.html"
+       href="../chapter2/exceptions_and_error_handling.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Data Types and Variables</p>
+        <p class="prev-next-title">Exceptions and Error Handling</p>
       </div>
     </a>
     <a class="right-next"
-       href="../chapter4/gdal_and_ogr.html"
+       href="exploring_data_using_pandas.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">GDAL and OGR</p>
+        <p class="prev-next-title">Exploring Data Using Pandas</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

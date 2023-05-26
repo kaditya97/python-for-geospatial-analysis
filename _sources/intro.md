@@ -4,8 +4,8 @@
 Let's take it easy
 ```
 
-# More to Know
-Check out the content pages bundled with this sample book to see more.
+# Table of Content
+Check out the content pages to get the overview of this course. Check the datsets tab to get datasets used in this course.
 
 ```{tableofcontents}
 ```

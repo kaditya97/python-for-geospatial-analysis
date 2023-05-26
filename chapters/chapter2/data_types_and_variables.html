@@ -63,8 +63,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="What is Pandas" href="../chapter3/what_is_pandas.html" />
-    <link rel="prev" title="Environmet Setup" href="../chapter1/environment_setup.html" />
+    <link rel="next" title="Operators, Math Functions and Comments" href="operators_math_functions_and_comments.html" />
+    <link rel="prev" title="Datasets" href="../chapter1/datasets.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -157,22 +157,35 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview and Setup</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../chapter1/why_python_for_geospatial_analysis.html">Why Python For Geospatial Analysis</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../chapter1/environment_setup.html">Environmet Setup</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter1/why_python_for_geospatial_analysis.html">Why Python For Geospatial Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter1/environment_setup.html">Environment Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter1/datasets.html">Datasets</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Basic Elements of Python</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Types and Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operators_math_functions_and_comments.html">Operators, Math Functions and Comments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="list_and_indices.html">List and Indices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dictionary.html">Dictionary in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conditional_statements_and_for_loops.html">Conditional Statements and For Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reading_and_writing_files.html">Reading and Writing Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classes_and_objects.html">Classes and Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions_and_error_handling.html">Exceptions and Error Handling</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploring Data Using Pandas</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../chapter3/what_is_pandas.html">What is Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/exploring_data_using_pandas.html">Exploring Data Using Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/processing_data_using_pandas.html">Processing Data Using Pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter3/plotting_datas.html">Ploting Data Using Matplotlib</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Exploring Geospatial Data</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../chapter4/gdal_and_ogr.html">GDAL and OGR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/shapely.html">Shapely</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/geopandas.html">Geopandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/rasterio.html">Rasterio</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Geospatial Data Analysis</span></p>
 <ul class="nav bd-sidenav">
@@ -235,7 +248,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+      <li><a href="https://github.com/kaditya97/python-for-geospatial-analysis" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -252,7 +265,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/chapter2/data_types_and_variables.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/kaditya97/python-for-geospatial-analysis/issues/new?title=Issue%20on%20page%20%2Fchapters/chapter2/data_types_and_variables.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -282,7 +295,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../../_sources/chapters/chapter2/data_types_and_variables.md" target="_blank"
+      <li><a href="../../_sources/chapters/chapter2/data_types_and_variables.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -292,7 +305,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -351,7 +364,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -367,6 +382,18 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-1-pothole-case-naming">Recommendation 1: pothole_case_naming</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-2-camelcase-naming">Recommendation 2: camelCase naming</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -378,6 +405,68 @@ document.write(`
                   
   <div class="tex2jax_ignore mathjax_ignore section" id="data-types-and-variables">
 <h1>Data Types and Variables<a class="headerlink" href="#data-types-and-variables" title="Permalink to this headline">#</a></h1>
+<p>Python has several built-in data types that allow you to store and manipulate different kinds of data. Here are some commonly used data types in Python:</p>
+<p><strong>Numeric Types:</strong></p>
+<ul class="simple">
+<li><p>int: Represents integer values, e.g., 42, -10.</p></li>
+<li><p>float: Represents floating-point numbers, e.g., 3.14, -0.5.</p></li>
+<li><p>complex: Represents complex numbers, e.g., 2 + 3j.</p></li>
+</ul>
+<p><strong>Sequence Types:</strong></p>
+<ul class="simple">
+<li><p>list: Ordered, mutable collection of elements, e.g., [1, 2, 3].</p></li>
+<li><p>tuple: Ordered, immutable collection of elements, e.g., (4, 5, 6).</p></li>
+<li><p>str: Represents a sequence of characters, e.g., “Hello, World!”.</p></li>
+</ul>
+<p><strong>Mapping Type:</strong></p>
+<ul class="simple">
+<li><p>dict: Collection of key-value pairs, where each key is unique, e.g., {“name”: “John”, “age”: 25}.</p></li>
+</ul>
+<p><strong>Set Types:</strong></p>
+<ul class="simple">
+<li><p>set: Unordered collection of unique elements, e.g., {1, 2, 3}.</p></li>
+<li><p>frozenset: Immutable version of a set, e.g., frozenset({4, 5, 6}).</p></li>
+</ul>
+<p><strong>Boolean Type:</strong></p>
+<ul class="simple">
+<li><p>bool: Represents the truth values True and False.</p></li>
+</ul>
+<p><strong>None Type:</strong></p>
+<ul class="simple">
+<li><p>None: Represents the absence of a value or a null value.</p></li>
+</ul>
+<p><strong>Other Types:</strong></p>
+<ul class="simple">
+<li><p>bytes: Represents a sequence of bytes, e.g., b”hello”.</p></li>
+<li><p>bytearray: Mutable version of bytes, e.g., bytearray(b”hello”).</p></li>
+<li><p>range: Represents a sequence of numbers, e.g., range(1, 5).</p></li>
+</ul>
+<p>These are the fundamental built-in data types in Python. Additionally, Python allows for defining custom data types using classes and supports various libraries and frameworks that provide specialized data types for specific purposes, such as NumPy arrays for numerical computations or Pandas DataFrames for data analysis.</p>
+<div class="section" id="variables">
+<h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">#</a></h2>
+<div class="section" id="recommendation-1-pothole-case-naming">
+<h3>Recommendation 1: pothole_case_naming<a class="headerlink" href="#recommendation-1-pothole-case-naming" title="Permalink to this headline">#</a></h3>
+<p>pothole_case_naming uses lowercase words separated by underscores _. This is our suggested format as the underscores make it easy to read the variable, and don’t add too much to the length of the variable name. As an example, consider the variable temp_celsius.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fmi_station_id</span> <span class="o">=</span> <span class="s2">&quot;101533&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="recommendation-2-camelcase-naming">
+<h3>Recommendation 2: camelCase naming<a class="headerlink" href="#recommendation-2-camelcase-naming" title="Permalink to this headline">#</a></h3>
+<p>camelCase or CamelCase uses capitalization of the first letter of words in a variable name to make it easier to read. In some cases the first letter of the variable may be capitalized. The variable tempFahrenheit was one example of camelCase.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fmiStationID</span> <span class="o">=</span> <span class="s2">&quot;101533&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -412,20 +501,20 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../chapter1/environment_setup.html"
+       href="../chapter1/datasets.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Environmet Setup</p>
+        <p class="prev-next-title">Datasets</p>
       </div>
     </a>
     <a class="right-next"
-       href="../chapter3/what_is_pandas.html"
+       href="operators_math_functions_and_comments.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">What is Pandas</p>
+        <p class="prev-next-title">Operators, Math Functions and Comments</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -438,6 +527,24 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-1-pothole-case-naming">Recommendation 1: pothole_case_naming</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommendation-2-camelcase-naming">Recommendation 2: camelCase naming</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
