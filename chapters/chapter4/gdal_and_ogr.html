@@ -369,7 +369,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -385,6 +387,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-wfs-service">Connecting wfs service</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -501,6 +511,51 @@ document.write(`
 </div>
 </div>
 <p>These are some of the basic functions and concepts in GDAL. The library offers many more advanced capabilities for geospatial data manipulation, format conversion, georeferencing, and more. You can refer to the official GDAL documentation for more details and examples: <a class="reference external" href="https://gdal.org/">https://gdal.org/</a></p>
+<div class="section" id="connecting-wfs-service">
+<h2>Connecting wfs service<a class="headerlink" href="#connecting-wfs-service" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">ogr</span>
+
+<span class="c1"># Specify the WFS service URL</span>
+<span class="n">base_url</span> <span class="o">=</span> <span class="s1">&#39;http://kartta.hel.fi/ws/geoserver/avoindata/wfs&#39;</span>
+<span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;2.0.0&#39;</span>
+<span class="n">service_type</span> <span class="o">=</span> <span class="s1">&#39;WFS&#39;</span>
+<span class="n">request</span> <span class="o">=</span> <span class="s1">&#39;GetFeature&#39;</span>
+<span class="n">typenames</span> <span class="o">=</span> <span class="s1">&#39;avoindata:Seutukartta_liikenne_metro_rata&#39;</span>
+<span class="n">output_format</span> <span class="o">=</span> <span class="s1">&#39;json&#39;</span>
+
+<span class="n">wfs_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">?service=</span><span class="si">{</span><span class="n">service_type</span><span class="si">}</span><span class="s2">&amp;version=</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">&amp;request=</span><span class="si">{</span><span class="n">request</span><span class="si">}</span><span class="s2">&amp;typenames=</span><span class="si">{</span><span class="n">typenames</span><span class="si">}</span><span class="s2">&amp;outputformat=</span><span class="si">{</span><span class="n">output_format</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># Open the WFS dataset</span>
+<span class="n">wfs_dataset</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">wfs_url</span><span class="p">)</span>
+
+<span class="c1"># Get the number of layers available in the WFS dataset</span>
+<span class="n">num_layers</span> <span class="o">=</span> <span class="n">wfs_dataset</span><span class="o">.</span><span class="n">GetLayerCount</span><span class="p">()</span>
+
+<span class="c1"># Print the names of the available layers</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_layers</span><span class="p">):</span>
+    <span class="n">layer</span> <span class="o">=</span> <span class="n">wfs_dataset</span><span class="o">.</span><span class="n">GetLayerByIndex</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Layer </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">GetName</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Choose a layer from the WFS dataset</span>
+<span class="n">layer_index</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Index of the layer you want to access</span>
+<span class="n">layer</span> <span class="o">=</span> <span class="n">wfs_dataset</span><span class="o">.</span><span class="n">GetLayerByIndex</span><span class="p">(</span><span class="n">layer_index</span><span class="p">)</span>
+
+<span class="c1"># Fetch the features from the layer</span>
+<span class="n">layer</span><span class="o">.</span><span class="n">ResetReading</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">layer</span><span class="p">:</span>
+    <span class="c1"># Perform desired operations with the feature</span>
+    <span class="c1"># print(feature)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">GetField</span><span class="p">(</span><span class="s1">&#39;metrorata&#39;</span><span class="p">))</span>  <span class="c1"># Access attribute values of the feature</span>
+
+<span class="c1"># Close the WFS dataset</span>
+<span class="n">wfs_dataset</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -561,6 +616,20 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-wfs-service">Connecting wfs service</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

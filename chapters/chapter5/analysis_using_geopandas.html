@@ -396,6 +396,52 @@ document.write(`
                   
   <div class="tex2jax_ignore mathjax_ignore section" id="analysis-using-geopandas">
 <h1>Analysis Using Geopandas<a class="headerlink" href="#analysis-using-geopandas" title="Permalink to this headline">#</a></h1>
+<p>GeoPandas is a Python library that extends the capabilities of Pandas to support geospatial data. It provides a set of functions for working with spatial data, including reading and writing various geospatial file formats, performing spatial operations, and visualizing geospatial data. Here are some of the basic functions in GeoPandas:</p>
+<p><strong>Reading and Writing Spatial Data:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">read_file()</span></code>: Read geospatial data from a file (e.g., shapefile, GeoJSON) and return a GeoDataFrame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">to_file()</span></code>: Write a GeoDataFrame to a file in a specified format.</p></li>
+</ul>
+<p><strong>Data Exploration:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">head()</span></code>: View the first few rows of the GeoDataFrame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">info()</span></code>: Get summary information about the GeoDataFrame, including column names, data types, and geometries.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot()</span></code>: Visualize the GeoDataFrame using matplotlib or other plotting libraries.</p></li>
+</ul>
+<p><strong>Geometric Operations:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry</span></code>: Access and manipulate the geometry column of the GeoDataFrame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">buffer()</span></code>: Create a buffer around geometries.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">centroid()</span></code>: Compute the centroid of geometries.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">intersection()</span></code>: Find the intersection between two GeoDataFrames.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">union()</span></code>: Compute the union of geometries.</p></li>
+</ul>
+<p><strong>Spatial Joins and Overlay:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sjoin()</span></code>: Perform a spatial join between two GeoDataFrames based on their spatial relationships.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">overlay()</span></code>: Compute the spatial overlay between two GeoDataFrames, creating new geometries based on intersection, union, or difference.</p></li>
+</ul>
+<p><strong>Attribute Filtering and Querying:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">loc[]</span></code>: Filter rows based on attribute conditions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">query()</span></code>: Filter rows based on a SQL-like query expression.</p></li>
+</ul>
+<p><strong>Coordinate Reference Systems (CRS):</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">crs</span></code>: Access and modify the coordinate reference system of the GeoDataFrame.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">to_crs()</span></code>: Reproject the GeoDataFrame to a different CRS.</p></li>
+</ul>
+<p><strong>Aggregation and Grouping:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">groupby()</span></code>: Group GeoDataFrame by one or more columns.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agg()</span></code>: Compute aggregated statistics on grouped data.</p></li>
+</ul>
+<p><strong>Exporting and Importing Geometries:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">geopandas.GeoSeries()</span></code>: Create a GeoSeries from a list of geometries.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">shapely.geometry</span></code>: Import Shapely geometry types and functions for creating and manipulating geometries.</p></li>
+</ul>
+<p>These are just a few examples of the basic functions available in GeoPandas. The library provides a rich set of functionalities for geospatial data manipulation and analysis. For more detailed information, you can refer to the GeoPandas documentation (<a class="reference external" href="https://geopandas.org/">https://geopandas.org/</a>) and explore the available methods and attributes for GeoDataFrames and GeoSeries.</p>
 </div>
 
     <script type="text/x-thebe-config">
