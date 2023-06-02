@@ -186,6 +186,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Shapely</a></li>
 <li class="toctree-l1"><a class="reference internal" href="geopandas.html">Geopandas</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rasterio.html">Rasterio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="folium.html">Folium Maps</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Geospatial Data Analysis</span></p>
 <ul class="nav bd-sidenav">
@@ -395,6 +396,86 @@ document.write(`
                   
   <div class="tex2jax_ignore mathjax_ignore section" id="shapely">
 <h1>Shapely<a class="headerlink" href="#shapely" title="Permalink to this headline">#</a></h1>
+<p>Shapely is a Python library for geometric operations and computations. It provides a set of classes and functions for working with planar geometry objects, such as points, lines, polygons, and geometric collections. Shapely is built on top of the widely used and powerful GEOS library.</p>
+<p>Here are some of the basic functions and concepts in Shapely:</p>
+<p><strong>Point:</strong> A Point represents a single location in space, defined by its x and y coordinates.</p>
+<p>Creating a Point:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="n">point</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>LineString:</strong> A LineString is a sequence of connected line segments.</p>
+<p>Creating a LineString:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">LineString</span>
+
+<span class="n">line</span> <span class="o">=</span> <span class="n">LineString</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Polygon:</strong> A Polygon is a closed shape formed by a sequence of connected linear rings. The first ring is the exterior ring, and any subsequent rings are interior rings (also known as holes).</p>
+<p>Creating a Polygon:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Polygon</span>
+
+<span class="n">polygon</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Geometry Collections:</strong> Shapely provides classes to represent collections of geometric objects, such as MultiPoint, MultiLineString, MultiPolygon, and GeometryCollection.</p>
+<p>Creating a MultiPoint:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">MultiPoint</span>
+
+<span class="n">multipoint</span> <span class="o">=</span> <span class="n">MultiPoint</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Spatial Operations:</strong> Shapely allows you to perform various spatial operations on geometric objects, such as union, intersection, difference, and buffer.</p>
+<p>Union of two polygons:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">union</span> <span class="o">=</span> <span class="n">polygon1</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">polygon2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Intersection of two polygons:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">intersection</span> <span class="o">=</span> <span class="n">polygon1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">polygon2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Difference between two polygons:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">difference</span> <span class="o">=</span> <span class="n">polygon1</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">polygon2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Buffer around a geometry:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">buffer</span> <span class="o">=</span> <span class="n">polygon</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>These are just some of the basic functions and concepts in Shapely. The library offers many more advanced capabilities for geometric manipulations, spatial analysis, and more. You can refer to the official Shapely documentation for more details and examples: <a class="reference external" href="https://shapely.readthedocs.io/">https://shapely.readthedocs.io/</a></p>
 </div>
 
     <script type="text/x-thebe-config">

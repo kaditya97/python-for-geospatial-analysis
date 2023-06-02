@@ -186,6 +186,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../chapter4/shapely.html">Shapely</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter4/geopandas.html">Geopandas</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter4/rasterio.html">Rasterio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/folium.html">Folium Maps</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Geospatial Data Analysis</span></p>
 <ul class="current nav bd-sidenav">
@@ -368,7 +369,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -384,6 +387,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-pyqgis-code-in-console">Running PyQGIS code in console</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -395,6 +406,34 @@ document.write(`
                   
   <div class="tex2jax_ignore mathjax_ignore section" id="python-and-qgis">
 <h1>Python and QGIS<a class="headerlink" href="#python-and-qgis" title="Permalink to this headline">#</a></h1>
+<a class="reference internal image-reference" href="../../_images/pyqgis.svg"><img alt="pyqgis" class="align-center" src="../../_images/pyqgis.svg" width="400px" /></a>
+<!-- <div align="center">
+    <iframe width="560" height="315"
+    src="https://www.youtube.com/embed/X-LvGvNor4E"
+    </iframe>
+</div> --><div class="section" id="running-pyqgis-code-in-console">
+<h2>Running PyQGIS code in console<a class="headerlink" href="#running-pyqgis-code-in-console" title="Permalink to this headline">#</a></h2>
+<p>Now that we’re set, let’s open QGIS’s Python console and get to work! Open it from Plugins &gt; Python console or use the shortcut <code class="docutils literal notranslate"><span class="pre">Ctrl+Alt+P</span></code> on your keyboard.</p>
+<p>By default an iface object is imported, which allows the access to the currently active QGIS instance’s user interface. For example, we can easily retrieve the active (selected) layer, then access its type, name, and count its features:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get active layer:</span>
+<span class="n">layer</span> <span class="o">=</span> <span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="c1"># Let&#39;s see what we got</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">layer</span><span class="p">))</span>
+<span class="c1"># &lt;class &#39;qgis._core.QgsVectorLayer&#39;&gt;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">sourceName</span><span class="p">())</span>
+<span class="c1"># Seutukartta_liikenne_metro_rata</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">featureCount</span><span class="p">())</span>
+<span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -455,6 +494,20 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-pyqgis-code-in-console">Running PyQGIS code in console</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

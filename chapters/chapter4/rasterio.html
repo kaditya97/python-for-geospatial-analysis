@@ -63,7 +63,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Analysis Using Geopandas" href="../chapter5/analysis_using_geopandas.html" />
+    <link rel="next" title="Folium Maps" href="folium.html" />
     <link rel="prev" title="Geopandas" href="geopandas.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
@@ -186,6 +186,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="shapely.html">Shapely</a></li>
 <li class="toctree-l1"><a class="reference internal" href="geopandas.html">Geopandas</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Rasterio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="folium.html">Folium Maps</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Geospatial Data Analysis</span></p>
 <ul class="nav bd-sidenav">
@@ -395,6 +396,107 @@ document.write(`
                   
   <div class="tex2jax_ignore mathjax_ignore section" id="rasterio">
 <h1>Rasterio<a class="headerlink" href="#rasterio" title="Permalink to this headline">#</a></h1>
+<p>Rasterio is a Python library for working with geospatial raster data. It provides an interface to read, write, and manipulate raster datasets, such as satellite imagery, digital elevation models (DEMs), and other gridded geospatial data. Rasterio leverages the GDAL library to handle various raster formats efficiently.</p>
+<p>Here are some of the basic functions and concepts in Rasterio:</p>
+<p><strong>Opening and Reading Raster Datasets:</strong> Rasterio allows you to open and read raster datasets in various formats.</p>
+<p>Opening a raster dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rasterio</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;path/to/raster.tif&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Reading raster data as a NumPy array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Accessing metadata and properties:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metadata</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">meta</span>
+<span class="n">crs</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">crs</span>
+<span class="n">bounds</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">bounds</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Writing Raster Datasets:</strong> Rasterio enables you to create and write raster datasets.</p>
+<p>Creating a new raster dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rasterio</span>
+
+<span class="n">new_dataset</span> <span class="o">=</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;path/to/new_raster.tif&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GTiff&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">rows</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">bands</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">data_type</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">crs</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Writing data to the new raster dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_dataset</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Closing the raster dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_dataset</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Manipulating Raster Data:</strong> Rasterio provides functions to perform various operations on raster data.</p>
+<p>Resampling and reprojecting a raster dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rasterio.enums</span> <span class="kn">import</span> <span class="n">Resampling</span>
+
+<span class="n">resampled</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">out_shape</span><span class="o">=</span><span class="p">(</span><span class="n">new_rows</span><span class="p">,</span> <span class="n">new_cols</span><span class="p">),</span> <span class="n">resampling</span><span class="o">=</span><span class="n">Resampling</span><span class="o">.</span><span class="n">bilinear</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Clipping a raster dataset to a specific extent:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rasterio.mask</span> <span class="kn">import</span> <span class="n">mask</span>
+
+<span class="n">clipped</span><span class="p">,</span> <span class="n">transform</span> <span class="o">=</span> <span class="n">mask</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Calculating statistics of a raster dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">statistics</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">dataset</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Visualization:</strong> Rasterio can be used in conjunction with Matplotlib to visualize raster datasets.</p>
+<p>Plotting a raster dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>These are some of the basic functions and concepts in Rasterio. The library offers many more advanced capabilities for working with raster data, such as band manipulation, reclassification, merging, and more. You can refer to the official Rasterio documentation for more details and examples: <a class="reference external" href="https://rasterio.readthedocs.io/">https://rasterio.readthedocs.io/</a></p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -438,11 +540,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="../chapter5/analysis_using_geopandas.html"
+       href="folium.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Analysis Using Geopandas</p>
+        <p class="prev-next-title">Folium Maps</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

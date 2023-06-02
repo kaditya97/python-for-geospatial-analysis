@@ -1,1 +1,2 @@
 # Introduction to DEM Analysis
+DEM (Digital Elevation Model) products refer to datasets that provide information about the elevation or height values of the Earth's surface at different locations. DEMs are widely used in various applications, including terrain analysis, hydrology, cartography, and 3D visualization.

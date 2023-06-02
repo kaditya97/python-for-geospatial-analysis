@@ -185,6 +185,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../chapter4/shapely.html">Shapely</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter4/geopandas.html">Geopandas</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter4/rasterio.html">Rasterio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/folium.html">Folium Maps</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Geospatial Data Analysis</span></p>
 <ul class="nav bd-sidenav">
@@ -394,6 +395,144 @@ document.write(`
                   
   <div class="tex2jax_ignore mathjax_ignore section" id="cut-fill-analysis">
 <h1>Cut Fill Analysis<a class="headerlink" href="#cut-fill-analysis" title="Permalink to this headline">#</a></h1>
+<p>Cut-fill analysis is a technique used in earthwork and construction projects to determine the volume of material that needs to be cut (removed) or filled (added) at a particular location. It is commonly performed in grading and excavation projects, such as road construction, building construction, and land development.</p>
+<p>The main objective of cut-fill analysis is to assess the balance between the earthwork cut and fill quantities to achieve desired topography or grading requirements. It helps in optimizing the project design, estimating material quantities, and managing project costs.</p>
+<p>Cut-fill analysis provides valuable information for project planning, cost estimation, and earthwork management. It helps in optimizing the design to minimize excessive cut or fill, balancing the excavation and fill quantities to reduce material transportation, and ensuring the stability and integrity of the constructed features.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">gdal</span><span class="p">,</span> <span class="n">osr</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate area and volume above the base height</span>
+<span class="k">def</span> <span class="nf">cut_area_volume</span><span class="p">(</span><span class="n">dem_data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">base_height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">cell_size</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+  <span class="n">binary_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dem_data</span> <span class="o">&gt;</span> <span class="n">base_height</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># Create binary mask of DEM</span>
+  <span class="n">cut_data</span> <span class="o">=</span> <span class="n">dem_data</span><span class="p">[</span><span class="n">dem_data</span> <span class="o">&gt;</span> <span class="n">base_height</span><span class="p">]</span>
+  <span class="n">cut_area</span> <span class="o">=</span> <span class="n">cell_size</span> <span class="o">*</span> <span class="n">cut_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">cut_volume</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">dem_data</span> <span class="o">-</span> <span class="n">base_height</span><span class="p">)</span> <span class="o">*</span> <span class="n">binary_mask</span> <span class="o">*</span> <span class="n">cell_size</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">cut_area</span><span class="p">,</span> <span class="n">cut_volume</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate area and volume below the base height</span>
+<span class="k">def</span> <span class="nf">fill_area_volume</span><span class="p">(</span><span class="n">dem_data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">base_height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">cell_size</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+  <span class="n">binary_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dem_data</span> <span class="o">&gt;</span> <span class="n">base_height</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># Create binary mask of DEM</span>
+  <span class="n">fill_data</span> <span class="o">=</span> <span class="n">dem_data</span><span class="p">[</span><span class="n">dem_data</span> <span class="o">&lt;</span> <span class="n">base_height</span><span class="p">]</span>
+  <span class="n">fill_area</span> <span class="o">=</span> <span class="n">cell_size</span> <span class="o">*</span> <span class="n">fill_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">fill_volume</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">base_height</span> <span class="o">-</span> <span class="n">dem_data</span><span class="p">)</span> <span class="o">*</span> <span class="n">binary_mask</span> <span class="o">*</span> <span class="n">cell_size</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">fill_area</span><span class="p">,</span> <span class="n">fill_volume</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load DEM using gdal</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s1">&#39;clipped_raster.tif&#39;</span><span class="p">)</span>
+<span class="n">dem_band</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">dem_data</span> <span class="o">=</span> <span class="n">dem_band</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+<span class="n">dem_data</span> <span class="o">=</span> <span class="n">dem_data</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="c1"># Convert to 1D array</span>
+
+<span class="c1"># Determine height at which to calculate cut and fill volumes # We can also take user input</span>
+<span class="n">base_height</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1">#elevation_average </span>
+
+<span class="c1"># Remove nodata value from the raster</span>
+<span class="n">nodata</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">GetNoDataValue</span><span class="p">()</span>
+<span class="n">dem_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">dem_data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">dem_data</span> <span class="o">==</span> <span class="n">nodata</span><span class="p">))</span>
+
+<span class="c1"># Get geotransform and projection of DEM</span>
+<span class="n">geotransform</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">()</span>
+<span class="n">projection</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">GetProjection</span><span class="p">()</span>
+
+<span class="c1"># Check if dataset is in projected or geographic coordinate system</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">()</span>
+<span class="n">cs</span><span class="o">.</span><span class="n">ImportFromWkt</span><span class="p">(</span><span class="n">projection</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">cs</span><span class="o">.</span><span class="n">IsProjected</span><span class="p">():</span>
+    <span class="n">cell_size</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">geotransform</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">geotransform</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Dataset is in geographic coordinate system, area and volume calculation will not be precise&#39;</span><span class="p">)</span>
+    <span class="n">cell_size</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">geotransform</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mf">111320.0</span> <span class="o">*</span> <span class="n">geotransform</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">*</span><span class="mf">111320.0</span><span class="p">)</span> <span class="c1"># Convet geographic distance to meter</span>
+
+
+<span class="n">cut_area</span><span class="p">,</span> <span class="n">cut_volume</span> <span class="o">=</span> <span class="n">cut_area_volume</span><span class="p">(</span><span class="n">dem_data</span><span class="p">,</span> <span class="n">base_height</span><span class="p">,</span> <span class="n">cell_size</span><span class="p">)</span>
+<span class="n">fill_area</span><span class="p">,</span> <span class="n">fill_volume</span> <span class="o">=</span> <span class="n">fill_area_volume</span><span class="p">(</span><span class="n">dem_data</span><span class="p">,</span> <span class="n">base_height</span><span class="p">,</span> <span class="n">cell_size</span><span class="p">)</span>
+<span class="n">net_volume</span> <span class="o">=</span> <span class="n">cut_volume</span> <span class="o">-</span> <span class="n">fill_volume</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cut area at </span><span class="si">{</span><span class="n">base_height</span><span class="si">}</span><span class="s2"> meter is </span><span class="si">{</span><span class="n">cut_area</span><span class="si">}</span><span class="s2"> square meters, and volume is </span><span class="si">{</span><span class="n">cut_volume</span><span class="si">}</span><span class="s2"> cubic meters&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fill area at </span><span class="si">{</span><span class="n">base_height</span><span class="si">}</span><span class="s2"> meter is </span><span class="si">{</span><span class="n">fill_area</span><span class="si">}</span><span class="s2"> square meters, and volume is </span><span class="si">{</span><span class="n">fill_volume</span><span class="si">}</span><span class="s2"> cubic meters&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Net cut-fill volume at </span><span class="si">{</span><span class="n">base_height</span><span class="si">}</span><span class="s2"> meter is </span><span class="si">{</span><span class="n">net_volume</span><span class="si">}</span><span class="s2"> cubic meters&quot;</span><span class="p">)</span> <span class="c1"># +ve sign for cut and -ve for fill</span>
+
+<span class="c1"># Close dataset</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Finding the optimum elevation at which there is minimum cut and fill</span>
+
+<span class="k">def</span> <span class="nf">compute_cut_fill_volumes</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">elev</span><span class="p">,</span> <span class="n">cell_size</span><span class="p">):</span>
+    <span class="c1"># Calculate the cut and fill volumes for the given elevation</span>
+    <span class="n">cut_area</span><span class="p">,</span> <span class="n">cut_volume</span> <span class="o">=</span> <span class="n">cut_area_volume</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">elev</span><span class="p">,</span> <span class="n">cell_size</span><span class="p">)</span>
+    <span class="n">fill_area</span><span class="p">,</span> <span class="n">fill_volume</span> <span class="o">=</span> <span class="n">fill_area_volume</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">elev</span><span class="p">,</span> <span class="n">cell_size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cut_volume</span><span class="p">,</span> <span class="n">fill_volume</span>
+
+<span class="k">def</span> <span class="nf">compute_optimal_elevation</span><span class="p">(</span><span class="n">dem</span><span class="p">):</span>
+    <span class="c1"># Get the raster band and read the data as a NumPy array</span>
+    <span class="n">band</span> <span class="o">=</span> <span class="n">dem</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">band</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">nodata</span> <span class="o">=</span> <span class="n">dem</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">GetNoDataValue</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">data</span> <span class="o">==</span> <span class="n">nodata</span><span class="p">))</span>
+
+    <span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span> <span class="o">=</span> <span class="n">band</span><span class="o">.</span><span class="n">GetStatistics</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">geotransform</span> <span class="o">=</span> <span class="n">dem</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">()</span>
+    <span class="n">cell_size</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">geotransform</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">geotransform</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+
+    <span class="c1"># Set the initial lower and upper bounds for the elevation range</span>
+    <span class="n">lower_bound</span> <span class="o">=</span> <span class="nb">min</span>
+    <span class="n">upper_bound</span> <span class="o">=</span> <span class="nb">max</span>
+
+    <span class="c1"># Set the initial tolerance for the elevation range</span>
+    <span class="n">tolerance</span> <span class="o">=</span> <span class="mf">0.0001</span>
+
+    <span class="c1"># Iterate until the difference between the upper and lower bounds is less than the tolerance</span>
+    <span class="k">while</span> <span class="n">upper_bound</span> <span class="o">-</span> <span class="n">lower_bound</span> <span class="o">&gt;</span> <span class="n">tolerance</span><span class="p">:</span>
+        <span class="c1"># Calculate the midpoint of the elevation range</span>
+        <span class="n">midpoint_elev</span> <span class="o">=</span> <span class="p">(</span><span class="n">lower_bound</span> <span class="o">+</span> <span class="n">upper_bound</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+        <span class="c1"># Compute the cut and fill volumes for the elevation midpoint</span>
+        <span class="n">cut_volume</span><span class="p">,</span> <span class="n">fill_volume</span> <span class="o">=</span> <span class="n">compute_cut_fill_volumes</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">midpoint_elev</span><span class="p">,</span> <span class="n">cell_size</span><span class="p">)</span>
+
+        <span class="c1"># If the cut volume is greater than the fill volume, set the new lower bound to the midpoint elevation</span>
+        <span class="k">if</span> <span class="n">cut_volume</span> <span class="o">&gt;</span> <span class="n">fill_volume</span><span class="p">:</span>
+            <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">midpoint_elev</span>
+        <span class="c1"># Otherwise, set the new upper bound to the midpoint elevation</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">upper_bound</span> <span class="o">=</span> <span class="n">midpoint_elev</span>
+
+    <span class="c1"># The optimal elevation for cut-fill analysis is the midpoint elevation of the final elevation range</span>
+    <span class="n">optimal_elev</span> <span class="o">=</span> <span class="p">(</span><span class="n">lower_bound</span> <span class="o">+</span> <span class="n">upper_bound</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">optimal_elev</span>
+
+<span class="c1"># Open the DEM file using GDAL</span>
+<span class="n">dem</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s1">&#39;clipped_raster.tif&#39;</span><span class="p">)</span>
+<span class="n">optimum_elevation</span> <span class="o">=</span> <span class="n">compute_optimal_elevation</span><span class="p">(</span><span class="n">dem</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The optimum elevation for minimum cut fill is: </span><span class="si">{</span><span class="n">optimum_elevation</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

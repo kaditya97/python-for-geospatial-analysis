@@ -186,6 +186,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="../chapter4/shapely.html">Shapely</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter4/geopandas.html">Geopandas</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../chapter4/rasterio.html">Rasterio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter4/folium.html">Folium Maps</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Geospatial Data Analysis</span></p>
 <ul class="nav bd-sidenav">
@@ -395,6 +396,246 @@ document.write(`
                   
   <div class="tex2jax_ignore mathjax_ignore section" id="dem-products">
 <h1>Dem Products<a class="headerlink" href="#dem-products" title="Permalink to this headline">#</a></h1>
+<p>When working with a Digital Elevation Model (DEM), there are several outputs or derived products that can be generated based on the elevation data. Here are some common outputs obtained from DEM analysis:</p>
+<p><strong>Hillshade:</strong> Hillshade is a visualization technique that creates a shaded relief map to depict the terrain’s three-dimensional characteristics. It uses lighting angles to simulate the effects of illumination on the surface, resulting in shadows and highlights that emphasize the terrain’s shape and topography.</p>
+<p><strong>Slope:</strong> Slope represents the steepness of the terrain at each location. It is calculated as the rate of change in elevation over a given distance. Slope values are typically expressed in degrees or as a percentage. Slope analysis is useful for understanding the terrain’s gradient and identifying areas with steep slopes.</p>
+<p><strong>Aspect:</strong> Aspect describes the direction in which a slope faces. It is usually measured in degrees, representing the azimuth angle from north (0°-360°) toward which the slope faces. Aspect analysis provides information about the orientation of the terrain and its exposure to different solar radiation or wind patterns.</p>
+<p><strong>Contour Lines:</strong> Contour lines are lines that connect points of equal elevation on a terrain surface. They are widely used in cartography to represent the shape and relief of the land. Contour lines provide a visual representation of elevation changes, and their spacing can indicate the steepness of the terrain.</p>
+<p><strong>Watershed Delineation:</strong> Using DEM data, watershed delineation techniques can be applied to identify the drainage basins or catchment areas of rivers and streams. Watershed delineation is important for hydrological studies, water resource management, and understanding the flow patterns of surface water.</p>
+<p><strong>Viewshed Analysis:</strong> Viewshed analysis determines the areas visible or hidden from a given viewpoint in the terrain. It helps identify locations with good visibility or line of sight, making it useful for siting observation points, telecommunication towers, or surveillance systems.</p>
+<p><strong>Terrain Classification:</strong> DEM data can be used for classifying terrain features, such as flat areas, hills, valleys, ridges, and cliffs. Classification can be based on slope, curvature, or other terrain attributes, enabling the identification and characterization of different landforms.</p>
+<p>These are some common outputs that can be derived from DEM analysis. Depending on the specific requirements of your project or analysis, other derived products such as roughness, aspect-based solar radiation, or elevation profiles may also be generated.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hillshade</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">rasterio</span>
+
+<span class="c1"># Read the DEM file</span>
+<span class="n">dem_path</span> <span class="o">=</span> <span class="s1">&#39;path/to/dem.tif&#39;</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">dem_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+    <span class="n">dem</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Read the first band of the DEM</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">transform</span>  <span class="c1"># Get the affine transformation matrix</span>
+
+<span class="c1"># Calculate hillshade</span>
+<span class="n">azimuth</span> <span class="o">=</span> <span class="mi">315</span>  <span class="c1"># Angle of the light source (in degrees)</span>
+<span class="n">altitude</span> <span class="o">=</span> <span class="mi">45</span>  <span class="c1"># Angle of the light source above the horizon (in degrees)</span>
+<span class="n">hillshade</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">hillshade</span><span class="p">(</span><span class="n">dem</span><span class="p">,</span> <span class="n">azimuth</span><span class="p">,</span> <span class="n">altitude</span><span class="p">),</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Create a new raster file for the hillshade</span>
+<span class="n">hillshade_path</span> <span class="o">=</span> <span class="s1">&#39;path/to/hillshade.tif&#39;</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">hillshade_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GTiff&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">hillshade</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="n">hillshade</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">hillshade</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">src</span><span class="o">.</span><span class="n">crs</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
+    <span class="n">dst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">hillshade</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Write the hillshade data to the raster file</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Slope and Aspect</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">rasterio</span>
+
+<span class="c1"># Read the DEM file</span>
+<span class="n">dem_path</span> <span class="o">=</span> <span class="s1">&#39;path/to/dem.tif&#39;</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">dem_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+    <span class="n">dem</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Read the first band of the DEM</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">transform</span>  <span class="c1"># Get the affine transformation matrix</span>
+
+<span class="c1"># Calculate slope</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">dem</span><span class="p">,</span> <span class="n">transform</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">transform</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">slope</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+
+<span class="c1"># Calculate aspect</span>
+<span class="n">aspect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">aspect</span><span class="p">[</span><span class="n">aspect</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">360</span>  <span class="c1"># Adjust aspect values from -180 to 180 to 0 to 360 range</span>
+
+<span class="c1"># Create a new raster file for slope</span>
+<span class="n">slope_path</span> <span class="o">=</span> <span class="s1">&#39;path/to/slope.tif&#39;</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">slope_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GTiff&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">slope</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="n">slope</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">slope</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">src</span><span class="o">.</span><span class="n">crs</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
+    <span class="n">dst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">slope</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Write the slope data to the raster file</span>
+
+<span class="c1"># Create a new raster file for aspect</span>
+<span class="n">aspect_path</span> <span class="o">=</span> <span class="s1">&#39;path/to/aspect.tif&#39;</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">aspect_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GTiff&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">aspect</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="n">aspect</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">aspect</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">src</span><span class="o">.</span><span class="n">crs</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
+    <span class="n">dst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">aspect</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Write the aspect data to the raster file</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">gdal</span><span class="p">,</span> <span class="n">ogr</span><span class="p">,</span> <span class="n">osr</span>
+
+<span class="c1"># Generate contours by interval provided</span>
+<span class="k">def</span> <span class="nf">generate_contours_by_interval</span><span class="p">(</span><span class="n">dem</span><span class="p">,</span> <span class="n">out_shp_path</span><span class="p">,</span> <span class="n">contour_interval</span><span class="p">):</span>
+    <span class="n">band</span> <span class="o">=</span> <span class="n">dem</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">nodata</span> <span class="o">=</span> <span class="n">band</span><span class="o">.</span><span class="n">GetNoDataValue</span><span class="p">()</span>
+    <span class="n">proj</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">(</span><span class="n">wkt</span><span class="o">=</span><span class="n">dem</span><span class="o">.</span><span class="n">GetProjection</span><span class="p">())</span>
+
+    <span class="c1"># Generate the contour lines</span>
+    <span class="n">contours_ds</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span><span class="s1">&#39;ESRI Shapefile&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">CreateDataSource</span><span class="p">(</span><span class="n">out_shp_path</span><span class="p">)</span>
+    <span class="n">contour_lyr</span> <span class="o">=</span> <span class="n">contours_ds</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">(</span><span class="s1">&#39;contours&#39;</span><span class="p">,</span> <span class="n">proj</span><span class="p">)</span>
+    <span class="n">contour_lyr</span><span class="o">.</span><span class="n">CreateField</span><span class="p">(</span><span class="n">ogr</span><span class="o">.</span><span class="n">FieldDefn</span><span class="p">(</span><span class="s1">&#39;elevation&#39;</span><span class="p">,</span> <span class="n">ogr</span><span class="o">.</span><span class="n">OFTReal</span><span class="p">))</span>
+    
+    <span class="n">gdal</span><span class="o">.</span><span class="n">ContourGenerate</span><span class="p">(</span><span class="n">band</span><span class="p">,</span> <span class="n">contour_interval</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nodata</span><span class="p">,</span> <span class="n">contour_lyr</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Clean up and return the results</span>
+    <span class="n">contours_ds</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">del</span> <span class="n">contours_ds</span>
+
+<span class="n">dem</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s1">&#39;clipped_raster.tif&#39;</span><span class="p">)</span>
+<span class="n">generate_contours_by_interval</span><span class="p">(</span><span class="n">dem</span><span class="p">,</span> <span class="s1">&#39;contours.shp&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">gdal</span><span class="p">,</span> <span class="n">ogr</span><span class="p">,</span> <span class="n">osr</span>
+
+<span class="c1"># Generate contours by number of contours provided</span>
+<span class="k">def</span> <span class="nf">generate_contours_by_number</span><span class="p">(</span><span class="n">dem</span><span class="p">,</span> <span class="n">out_shp_path</span><span class="p">,</span> <span class="n">number_of_contours</span><span class="p">):</span>
+    <span class="n">band</span> <span class="o">=</span> <span class="n">dem</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">nodata</span> <span class="o">=</span> <span class="n">band</span><span class="o">.</span><span class="n">GetNoDataValue</span><span class="p">()</span>
+    <span class="n">proj</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">(</span><span class="n">wkt</span><span class="o">=</span><span class="n">dem</span><span class="o">.</span><span class="n">GetProjection</span><span class="p">())</span>
+
+    <span class="c1"># Get contour interval from min and max value</span>
+    <span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span> <span class="o">=</span> <span class="n">band</span><span class="o">.</span><span class="n">GetStatistics</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">contour_interval</span> <span class="o">=</span> <span class="p">(</span><span class="nb">max</span> <span class="o">-</span> <span class="nb">min</span><span class="p">)</span> <span class="o">/</span> <span class="n">number_of_contours</span>
+
+    <span class="c1"># Generate the contour lines</span>
+    <span class="n">contours_ds</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span><span class="s1">&#39;ESRI Shapefile&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">CreateDataSource</span><span class="p">(</span><span class="n">out_shp_path</span><span class="p">)</span>
+    <span class="n">contour_lyr</span> <span class="o">=</span> <span class="n">contours_ds</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">(</span><span class="s1">&#39;contours&#39;</span><span class="p">,</span> <span class="n">proj</span><span class="p">)</span>
+    <span class="n">contour_lyr</span><span class="o">.</span><span class="n">CreateField</span><span class="p">(</span><span class="n">ogr</span><span class="o">.</span><span class="n">FieldDefn</span><span class="p">(</span><span class="s1">&#39;elevation&#39;</span><span class="p">,</span> <span class="n">ogr</span><span class="o">.</span><span class="n">OFTReal</span><span class="p">))</span>
+    
+    <span class="n">gdal</span><span class="o">.</span><span class="n">ContourGenerate</span><span class="p">(</span><span class="n">band</span><span class="p">,</span> <span class="n">contour_interval</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nodata</span><span class="p">,</span> <span class="n">contour_lyr</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Clean up and return the results</span>
+    <span class="n">contours_ds</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">del</span> <span class="n">contours_ds</span>
+
+<span class="n">dem</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s1">&#39;clipped_raster.tif&#39;</span><span class="p">)</span>
+<span class="n">generate_contours_by_number</span><span class="p">(</span><span class="n">dem</span><span class="p">,</span> <span class="s1">&#39;contours_num.shp&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Watershed delineation using DEM data</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">rasterio</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">label</span><span class="p">,</span> <span class="n">generate_binary_structure</span>
+
+<span class="c1"># Read the DEM file</span>
+<span class="n">dem_path</span> <span class="o">=</span> <span class="s1">&#39;path/to/dem.tif&#39;</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">dem_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+    <span class="n">dem</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Read the first band of the DEM</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">transform</span>  <span class="c1"># Get the affine transformation matrix</span>
+
+<span class="c1"># Set a threshold to define the pouring points for the watersheds</span>
+<span class="n">pour_threshold</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># Adjust this value as per your DEM and application</span>
+
+<span class="c1"># Generate a binary mask of the pour points based on the threshold</span>
+<span class="n">pour_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">dem</span> <span class="o">&gt;</span> <span class="n">pour_threshold</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Apply watershed algorithm to delineate the watersheds</span>
+<span class="n">structure</span> <span class="o">=</span> <span class="n">generate_binary_structure</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Define the neighborhood connectivity</span>
+<span class="n">labels</span><span class="p">,</span> <span class="n">num_watersheds</span> <span class="o">=</span> <span class="n">label</span><span class="p">(</span><span class="n">pour_points</span><span class="p">,</span> <span class="n">structure</span><span class="p">)</span>
+
+<span class="c1"># Create a new raster file for the watershed delineation</span>
+<span class="n">watershed_path</span> <span class="o">=</span> <span class="s1">&#39;path/to/watershed.tif&#39;</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">watershed_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GTiff&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">dem</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="n">dem</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">labels</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">src</span><span class="o">.</span><span class="n">crs</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
+    <span class="n">dst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Write the watershed labels to the raster file</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Viewshed analysis of a DEM</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">rasterio</span>
+
+<span class="k">def</span> <span class="nf">calculate_viewshed</span><span class="p">(</span><span class="n">dem</span><span class="p">,</span> <span class="n">observer_coords</span><span class="p">):</span>
+    <span class="c1"># Create an empty array to store the visibility values</span>
+    <span class="n">visibility</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">dem</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+
+    <span class="c1"># Iterate over each cell in the DEM</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dem</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dem</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="c1"># Skip if the cell is the observer&#39;s location</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span> <span class="o">==</span> <span class="n">observer_coords</span><span class="p">:</span>
+                <span class="k">continue</span>
+            
+            <span class="c1"># Calculate the elevation difference between the observer and the cell</span>
+            <span class="n">delta_z</span> <span class="o">=</span> <span class="n">dem</span><span class="p">[</span><span class="n">observer_coords</span><span class="p">]</span> <span class="o">-</span> <span class="n">dem</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+
+            <span class="c1"># Calculate the horizontal distance between the observer and the cell</span>
+            <span class="n">distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">row</span> <span class="o">-</span> <span class="n">observer_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">col</span> <span class="o">-</span> <span class="n">observer_coords</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+            <span class="c1"># Calculate the angle of inclination from the observer to the cell</span>
+            <span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">delta_z</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span>
+
+            <span class="c1"># Check if the angle is within the observer&#39;s field of view</span>
+            <span class="k">if</span> <span class="n">angle</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">45</span><span class="p">):</span>  <span class="c1"># Adjust the angle threshold as needed</span>
+                <span class="n">visibility</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">visibility</span>
+
+<span class="c1"># Read the DEM file</span>
+<span class="n">dem_path</span> <span class="o">=</span> <span class="s1">&#39;path/to/dem.tif&#39;</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">dem_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+    <span class="n">dem</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Read the first band of the DEM</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">transform</span>  <span class="c1"># Get the affine transformation matrix</span>
+
+<span class="c1"># Define the coordinates of the observer&#39;s location (row, col)</span>
+<span class="n">observer_coords</span> <span class="o">=</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>  <span class="c1"># Adjust the coordinates as needed</span>
+
+<span class="c1"># Perform viewshed analysis</span>
+<span class="n">visibility</span> <span class="o">=</span> <span class="n">calculate_viewshed</span><span class="p">(</span><span class="n">dem</span><span class="p">,</span> <span class="n">observer_coords</span><span class="p">)</span>
+
+<span class="c1"># Create a new raster file for the viewshed</span>
+<span class="n">viewshed_path</span> <span class="o">=</span> <span class="s1">&#39;path/to/viewshed.tif&#39;</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">viewshed_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GTiff&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">visibility</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="n">visibility</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">visibility</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">src</span><span class="o">.</span><span class="n">crs</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
+    <span class="n">dst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">visibility</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Write the viewshed data to the raster file</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Terrain Classification using K-means clustering</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">rasterio</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+
+<span class="c1"># Read the DEM file</span>
+<span class="n">dem_path</span> <span class="o">=</span> <span class="s1">&#39;path/to/dem.tif&#39;</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">dem_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+    <span class="n">dem</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Read the first band of the DEM</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">transform</span>  <span class="c1"># Get the affine transformation matrix</span>
+
+<span class="c1"># Flatten the DEM into a 1D array</span>
+<span class="n">dem_flat</span> <span class="o">=</span> <span class="n">dem</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Perform K-means clustering</span>
+<span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Number of terrain classes to identify</span>
+<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dem_flat</span><span class="p">)</span>
+
+<span class="c1"># Reshape the clustered labels to match the DEM shape</span>
+<span class="n">terrain_classes</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dem</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Create a new raster file for the terrain classification</span>
+<span class="n">terrain_path</span> <span class="o">=</span> <span class="s1">&#39;path/to/terrain_classification.tif&#39;</span>
+<span class="k">with</span> <span class="n">rasterio</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">terrain_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="s1">&#39;GTiff&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">terrain_classes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="n">terrain_classes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">terrain_classes</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">src</span><span class="o">.</span><span class="n">crs</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span> <span class="k">as</span> <span class="n">dst</span><span class="p">:</span>
+    <span class="n">dst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">terrain_classes</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Write the terrain classification data to the raster file</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

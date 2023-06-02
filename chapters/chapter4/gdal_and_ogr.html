@@ -186,6 +186,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="shapely.html">Shapely</a></li>
 <li class="toctree-l1"><a class="reference internal" href="geopandas.html">Geopandas</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rasterio.html">Rasterio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="folium.html">Folium Maps</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Geospatial Data Analysis</span></p>
 <ul class="nav bd-sidenav">
@@ -395,6 +396,111 @@ document.write(`
                   
   <div class="tex2jax_ignore mathjax_ignore section" id="gdal-and-ogr">
 <h1>GDAL and OGR<a class="headerlink" href="#gdal-and-ogr" title="Permalink to this headline">#</a></h1>
+<p>GDAL (Geospatial Data Abstraction Library) is a powerful open-source library for reading, writing, and manipulating geospatial raster and vector data formats. It provides a wide range of functionalities for working with geospatial data, including data format translation, projection transformations, resampling, and more. GDAL is written in C++ and offers bindings for various programming languages, including Python.</p>
+<p>Here are some of the basic functions and concepts in GDAL:</p>
+<p><strong>Opening and Reading Geospatial Datasets:</strong> GDAL allows you to open and read raster and vector datasets in different formats.</p>
+<p>Opening a raster dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">gdal</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s1">&#39;path/to/raster.tif&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Opening a vector dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">ogr</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s1">&#39;path/to/vector.shp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Accessing raster data as a NumPy array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">band</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">band</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Accessing vector data features:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">feature</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">GetFeature</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Writing Geospatial Datasets:</strong> GDAL allows you to create and write raster and vector datasets.</p>
+<p>Creating a new raster dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">driver</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span><span class="s1">&#39;GTiff&#39;</span><span class="p">)</span>
+<span class="n">new_dataset</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s1">&#39;path/to/new_raster.tif&#39;</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">bands</span><span class="p">,</span> <span class="n">data_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creating a new vector dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">driver</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span><span class="s1">&#39;ESRI Shapefile&#39;</span><span class="p">)</span>
+<span class="n">new_dataset</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">CreateDataSource</span><span class="p">(</span><span class="s1">&#39;path/to/new_vector.shp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Geospatial Transformations:</strong> GDAL provides functions for performing various geospatial transformations, such as coordinate system conversions and reprojecting datasets.</p>
+<p>Getting the coordinate system (CRS) of a dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crs</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">GetProjection</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Transforming coordinates from one CRS to another:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">osr</span>
+
+<span class="n">source_crs</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">()</span>
+<span class="n">source_crs</span><span class="o">.</span><span class="n">ImportFromEPSG</span><span class="p">(</span><span class="mi">4326</span><span class="p">)</span>  <span class="c1"># Source CRS: WGS84</span>
+<span class="n">target_crs</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">()</span>
+<span class="n">target_crs</span><span class="o">.</span><span class="n">ImportFromEPSG</span><span class="p">(</span><span class="mi">32633</span><span class="p">)</span>  <span class="c1"># Target CRS: UTM Zone 33N</span>
+
+<span class="n">transform</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">CoordinateTransformation</span><span class="p">(</span><span class="n">source_crs</span><span class="p">,</span> <span class="n">target_crs</span><span class="p">)</span>
+<span class="n">transformed_x</span><span class="p">,</span> <span class="n">transformed_y</span><span class="p">,</span> <span class="n">transformed_z</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">TransformPoint</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Dataset Information and Metadata:</strong> GDAL provides functions to access dataset information and metadata.</p>
+<p>Accessing raster dataset metadata:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metadata</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">GetMetadata</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Accessing vector dataset information:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layer</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">feature_count</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">GetFeatureCount</span><span class="p">()</span>
+<span class="n">extent</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">GetExtent</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>These are some of the basic functions and concepts in GDAL. The library offers many more advanced capabilities for geospatial data manipulation, format conversion, georeferencing, and more. You can refer to the official GDAL documentation for more details and examples: <a class="reference external" href="https://gdal.org/">https://gdal.org/</a></p>
 </div>
 
     <script type="text/x-thebe-config">
